@@ -2,11 +2,14 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart'; // 1. ADD THIS IMPORT
 import 'package:ecommerce_app/screens/admin_panel_screen.dart'; // 2. ADD THIS
-import 'package:ecommerce_app/widgets/product_card.dart'; // 1. ADD THIS IMPORT
+import 'package:ecommerce_app/widgets/product_cart.dart'; // 1. ADD THIS IMPORT
 import 'package:ecommerce_app/screens/product_detail_screen.dart'; // 1. ADD THIS IMPORT
+// ... (your existing imports)
 import 'package:ecommerce_app/providers/cart_provider.dart'; // 1. ADD THIS
 import 'package:ecommerce_app/screens/cart_screen.dart'; // 2. ADD THIS
 import 'package:provider/provider.dart'; // 3. ADD THIS
+import 'package:ecommerce_app/screens/order_history_screen.dart'; // ADD THIS IMPORT
+
 
 // 3. Change StatelessWidget to StatefulWidget
 class HomeScreen extends StatefulWidget {
@@ -101,15 +104,25 @@ class _HomeScreenState extends State<HomeScreen> {
             },
           ),
 
-          // 2. --- THIS IS THE MAGIC ---
-          //    This is a "collection-if". The IconButton will only
-          //    be built IF _userRole is equal to 'admin'.
+          // 2. --- ADD THIS NEW BUTTON ---
+          IconButton(
+            icon: const Icon(Icons.receipt_long), // A "receipt" icon
+            tooltip: 'My Orders',
+            onPressed: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => const OrderHistoryScreen(),
+                ),
+              );
+            },
+          ),
+
+          // 3. Your existing Admin Icon (if admin)
           if (_userRole == 'admin')
             IconButton(
               icon: const Icon(Icons.admin_panel_settings),
               tooltip: 'Admin Panel',
               onPressed: () {
-                // 3. This is why we imported admin_panel_screen.dart
                 Navigator.of(context).push(
                   MaterialPageRoute(
                     builder: (context) => const AdminPanelScreen(),
@@ -118,7 +131,7 @@ class _HomeScreenState extends State<HomeScreen> {
               },
             ),
 
-          // 4. The logout button (always visible)
+          // 4. Your existing Logout Icon
           IconButton(
             icon: const Icon(Icons.logout),
             tooltip: 'Logout',
@@ -204,6 +217,3 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 }
-
-
-
