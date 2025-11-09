@@ -58,8 +58,8 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        toolbarHeight: 190,
-        title: Image.asset('assets/images/app_logo.png', height: 170),
+        toolbarHeight: 170,
+        title: Image.asset('assets/images/app_logo.png', width: 140),
         actions: [
           Consumer<CartProvider>(
             builder: (context, cartProvider, child) {
